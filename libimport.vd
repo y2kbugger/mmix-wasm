@@ -1,0 +1,8 @@
+/* This is the libimport.h file for MMIX VD  rename to libimport.h */
+
+extern void win32_log(char *msg);
+extern void win32_ferror(int line, char *format, char *str);
+extern void win32_message(char *msg);
+
+extern void add_line_loc(int file_no, int line_no, octa loc);
+/* report the association of a file/line with a location */

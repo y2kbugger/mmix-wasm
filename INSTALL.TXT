@@ -1,0 +1,67 @@
+
+Configuration
+-------------
+To get a working mmix library,
+you need the file libconfig.h and linimport.h
+For the plain mmix simulator and assembler,
+you can just copy libconfig.plain to libconfig.h
+and libimport.plain to libimport.h
+
+If you want to modify these files you should see
+CONFIGURE.TXT for further explanations.
+
+MMIXware
+--------
+You need a subdirectory of this direcory called mmixware
+with the (latest) distribution of the mmixware sources.
+You can get these from the MMIX homepage (mmix.cs.hm.edu).
+
+Then you should create abstime.h in the mmixware directory.
+Change into this directory and run "make abstime.h"
+this will do
+ctangle abstime.c to create the c file then compile it
+and run it redirecting its output to abstime.h.
+
+Making the mmix library
+-----------------------
+Copy boilerplate.w and abstime.h from the mmixware subdirectory
+into the mmixlib directory.
+Under Unix, a simple make should suffice.
+- It will run ctangle on mmix-sim.w with the mmixlib.ch change file.
+This will produce multiple .c and .h files containing the mmix sources.
+
+- It will run ctangle on mmixal.w with the mmixallib.ch change file.
+This will produce two more .c files containing the mmix sources.
+
+- It will run ctangle on mmix-arith.w  and mmix-io.w.
+This will produce mmix-arith.c and mmix-io.c.
+
+Then all the C files together with libname.c and libbase.c will be compiled
+and packed into a library.
+
+Making mmix and mmixal
+----------------------
+The individual pieces from the library can be recombined to get
+a running simulator or a running assembler.
+Look at the files mmix-sim.c and mmixal.c also produced
+by the above run of ctangle. These files contain
+main programms that call the various functions from the library.
+You can compile them and link them against the mmix library just 
+created and you get a simulator and an assembler.
+You are however free to modify these main programs and 
+produce variations of the MMIX software. In this case you should
+give your executable a different name to avoid confusion with
+the original MMIXware.
+
+Windows and Visual Studio
+-------------------------
+To build and use the library under windows with the Visual Studio,
+you need a working ctangle.exe file. Download it from the MMIX homepage
+(or from www.literateprogramming.com).
+
+You have to make sure the path to this ctangle.exe is on the search path
+of visual studio (Try Tools->Options->Projects ans Solutions-> VC Directories)
+or a similar path depending on the version of Visual Studio. Then you
+should be able to open the solution file and build the library.
+ 
+

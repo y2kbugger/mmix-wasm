@@ -1,0 +1,4 @@
+/* This this the libimport.h file for MMIXCPU  rename to libimport.h */
+
+#include "../../vmbmmixlib/address.h"
+#include "../../vmbmmixlib/mmix-bus.h"
