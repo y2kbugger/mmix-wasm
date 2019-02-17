@@ -1,0 +1,192 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP              BITMAP                  "main.bmp"
+IDB_CONNECT             BITMAP                  "connect.bmp"
+IDB_OFF                 BITMAP                  "off.bmp"
+IDB_ON                  BITMAP                  "on.bmp"
+IDB_PIN_ON              BITMAP                  "pinon.bmp"
+IDB_PIN_OFF             BITMAP                  "pinoff.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU MENU 
+BEGIN
+    POPUP "All"
+    BEGIN
+        MENUITEM "&Exit",                       ID_EXIT
+        MENUITEM SEPARATOR
+        MENUITEM "&Connect...",                 ID_CONNECT
+        MENUITEM "&Settings...",                ID_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "&Debug",                      ID_DEBUG
+        MENUITEM "&Verbose",                    ID_VERBOSE
+        POPUP "&Help"
+        BEGIN
+            MENUITEM "&About",                      ID_HELP_ABOUT
+            MENUITEM "&Help",                       ID_HELP
+            MENUITEM "&Configuration",              ID_HELP_CONFIGURATION
+        END
+        MENUITEM "Minimize",                    ID_MINIMIZE
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR ACCELERATORS 
+BEGIN
+    VK_ESCAPE,      ID_EXIT,                VIRTKEY, NOINVERT
+    VK_F1,          IDHELP,                 VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON                ICON                    "icon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SETTINGS DIALOGEX 0, 0, 210, 127
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,153,87,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,153,107,50,14
+    EDITTEXT        IDC_ADDRESS,67,7,136,12,ES_AUTOHSCROLL
+    LTEXT           "Address",IDC_STATIC,7,9,26,8
+    EDITTEXT        IDC_RINTERRUPT,67,22,56,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Read Interrupt",IDC_STATIC,7,24,46,8
+    EDITTEXT        IDC_WINTERRUPT,67,37,56,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Write Interrupt",IDC_STATIC,7,39,46,8
+    CONTROL         "Enable",IDC_RENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,132,23,38,10
+    CONTROL         "Enable",IDC_WENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,132,38,38,10
+    CONTROL         "Disable Buffering",IDC_BUFFERED,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,54,69,10
+    EDITTEXT        IDC_DEVICENAME,67,67,136,12,ES_AUTOHSCROLL
+    LTEXT           "Serial Device",IDC_STATIC,7,69,43,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 203
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_CLASS               "VMB"
+    IDS_TITLE               "VMB Serial"
+END
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// French (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // French (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

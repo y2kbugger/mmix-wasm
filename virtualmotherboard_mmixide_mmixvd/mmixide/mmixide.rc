@@ -1,0 +1,431 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR ACCELERATORS 
+BEGIN
+    "F",            ID_EDIT_FIND,           VIRTKEY, CONTROL, NOINVERT
+    "G",            ID_EDIT_FINDAGAIN,      VIRTKEY, CONTROL, NOINVERT
+    "H",            ID_EDIT_REPLACE,        VIRTKEY, CONTROL, NOINVERT
+    "I",            ID_EDIT_PRETTY,         VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_F7,          ID_MMIX_ASSEMBLE,       VIRTKEY, NOINVERT
+    VK_F5,          ID_MMIX_DEBUG,          VIRTKEY, NOINVERT
+    VK_OEM_PLUS,    ID_VIEW_ZOOMIN,         VIRTKEY, CONTROL, NOINVERT
+    VK_OEM_MINUS,   ID_VIEW_ZOOMOUT,        VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_FILE_NEW            ICON                    "Icons\\new.ico"
+IDI_VIEW_ZOOMOUT        ICON                    "Icons\\zoomout.ico"
+IDI_FILE_OPEN           ICON                    "Icons\\open.ico"
+IDI_FILE_SAVE           ICON                    "Icons\\save.ico"
+IDI_EDIT_COPY           ICON                    "Icons\\copy.ico"
+IDI_EDIT_CUT            ICON                    "Icons\\cut.ico"
+IDI_EDIT_PASTE          ICON                    "Icons\\paste.ico"
+IDI_EDIT_REDO           ICON                    "Icons\\redo.ico"
+IDI_EDIT_UNDO           ICON                    "Icons\\undo.ico"
+IDI_HELP                ICON                    "Icons\\help.ico"
+IDI_MMIX_DEBUG          ICON                    "Icons\\debug.ico"
+IDI_VIEW_ZOOMIN         ICON                    "Icons\\zoomin.ico"
+IDI_FINDREPLACE         ICON                    "Icons\\find.ico"
+IDI_DEBUG_STEP          ICON                    "Icons\\stepin.ico"
+IDI_DEBUG_PAUSE         ICON                    "Icons\\pause.ico"
+IDI_DEBUG_HALT          ICON                    "Icons\\stop.ico"
+IDI_VIEW_WHITESPACE     ICON                    "Icons\\whitespace.ico"
+IDI_DEBUG_STEPOVER      ICON                    "Icons\\stepover.ico"
+IDI_DEBUG_STEPOUT       ICON                    "Icons\\stepout.ico"
+IDI_BREAKX              ICON                    "Icons\\brkexec.ico"
+IDI_BREAKR              ICON                    "Icons\\brkread.ico"
+IDI_BREAKW              ICON                    "Icons\\brkwrite.ico"
+IDI_BREAKT              ICON                    "Icons\\brktrace.ico"
+IDI_LOAD_FILE           ICON                    "Icons\\loadfile.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BREAKPOINTS DIALOGEX 0, 0, 134, 76
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_ADDRESS,2,3,76,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Add",IDC_ADD,82,2,50,16
+    PUSHBUTTON      "Remove",IDC_REMOVE,82,22,50,16
+    PUSHBUTTON      "X",IDC_EXEC,2,22,16,16,BS_ICON
+    PUSHBUTTON      "R",IDC_READ,22,22,16,16,BS_ICON
+    PUSHBUTTON      "W",IDC_WRITE,42,22,16,16,BS_ICON
+    PUSHBUTTON      "T",IDC_TRACE,62,22,16,16,BS_ICON
+    LISTBOX         IDC_LIST_BREAKPOINTS,2,42,130,32,LBS_SORT | LBS_OWNERDRAWFIXED | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_SHOW_DEBUG DIALOGEX 0, 0, 307, 219
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTERMOUSE | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Debug Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,167,199,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,245,199,50,14
+    CONTROL         "Local Registers",IDC_SHOW_LOCAL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,17,64,10
+    CONTROL         "Global Registers",IDC_SHOW_GLOBAL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,41,67,10
+    CONTROL         "Special Registers",IDC_SHOW_SPECIAL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,53,70,10
+    CONTROL         "Register Stack",IDC_SHOW_REGSTACK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,29,62,10
+    CONTROL         "Text Segment",IDC_SHOW_TEXT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,17,61,10
+    CONTROL         "Data Segment",IDC_SHOW_DATA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,29,61,10
+    CONTROL         "Pool Segment",IDC_SHOW_POOL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,41,59,10
+    CONTROL         "Negative Segment",IDC_SHOW_NEG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,65,75,10
+    CONTROL         "Stack Segment",IDC_SHOW_STACK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,53,63,10
+    GROUPBOX        "Show Registers",IDC_STATIC,9,7,153,73
+    GROUPBOX        "Show Memory",IDC_STATIC,171,7,125,72
+    CONTROL         "Break at Main",IDC_CHECK_MAIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,109,59,10
+    PUSHBUTTON      "Choose ...",IDC_SELECT_SPECIALS,102,51,50,14
+    CONTROL         "Trace Exceptions",IDC_CHECK_EXCEPTIONS,"Button",BS_AUTO3STATE | WS_TABSTOP,17,165,72,10
+    CONTROL         "Show Trace",IDC_CHECK_TRACE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,95,53,10
+    CONTROL         "Break after instruction (classic)",IDC_RADIO_BREAK_AFTER,
+                    "Button",BS_AUTORADIOBUTTON,17,123,115,10
+    CONTROL         "Break before instruction",IDC_RADIO_BREAK_BEFORE,"Button",BS_AUTORADIOBUTTON,17,137,93,10
+    CONTROL         "Auto-Close Debug Windows",IDC_CHECK_AUTOCLOSE,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,176,103,105,10
+    GROUPBOX        "Tracing",IDC_STATIC,9,84,153,129
+    CONTROL         "Warn if no application",IDC_CHECK_MISSING_APP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,120,85,10
+    CONTROL         "Debug Operating System",IDC_CHECK_OS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,179,96,10
+    CONTROL         "Enable stack tracing ",IDC_CHECK_STACKTRACE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,151,96,10
+    PUSHBUTTON      "Choose ...",IDC_SELECT_EXCEPTIONS,102,162,50,14
+    CONTROL         "Show Statistics",IDC_CHECK_STAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,193,64,10
+END
+
+IDD_FIND DIALOGEX 0, 0, 317, 79
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTERMOUSE | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Find and Replace"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Find:",IDC_STATIC,7,7,17,8
+    COMBOBOX        IDC_COMBO_FIND,42,7,191,80,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Find Next",IDC_FIND_NEXT,260,7,50,14
+    PUSHBUTTON      "Find Previous",IDC_FIND_PREV,260,24,50,14
+    CONTROL         "Match case",IDC_CHECK_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,49,52,10
+    CONTROL         "Match whole word",IDC_CHECK_WORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,62,74,10
+    LTEXT           "Replace:",IDC_STATIC,7,23,29,8
+    COMBOBOX        IDC_COMBO_REPLACE,42,23,191,80,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Replace",IDC_REPLACE,260,41,50,14
+    PUSHBUTTON      "Replace All",IDC_REPLACE_ALL,260,58,50,14
+    CONTROL         "Wrap around",IDC_CHECK_WRAP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,97,62,58,10
+    CONTROL         "Use \\t, \\n, \\r, and \\xFF",IDC_CHECK_ESC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,97,49,94,10
+END
+
+IDD_OPTIONS_ASSEMBLER DIALOGEX 0, 0, 239, 115
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTERMOUSE | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Assembler Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,183,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,183,24,50,14
+    LTEXT           "Buffer size",IDC_STATIC,7,9,50,8
+    EDITTEXT        IDC_BUFFERSIZE,116,7,56,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_BUFFERSIZE,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,116,7,11,14
+    CONTROL         "Expanded address calculations",IDC_CHECK_X,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,23,165,10
+    CONTROL         "Create listing file",IDC_CHECK_LISTING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,38,165,10
+    CONTROL         "Treat Warnings as Errors",IDC_CHECK_WARNERROR,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,53,165,10
+    CONTROL         "Warn on imprecise floating point constants",IDC_CHECK_IMPRECISE,
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,68,165,10
+    CONTROL         "Auto assemble",IDC_CHECK_AUTOASSEMBLE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,83,165,10
+    CONTROL         "Auto close error list",IDC_CHECK_AUTOCLOSE_ERRORS,
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,98,165,10
+END
+
+IDD_OPTIONS_EDITOR DIALOGEX 0, 0, 186, 181
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTERMOUSE | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Editor Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    CONTROL         "Allways save changed files",IDC_CHECK_AUTOSAVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,7,101,10
+    CONTROL         "Show line numbers",IDC_CHECK_LINENO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,19,75,10
+    CONTROL         "Show profile",IDC_CHECK_PROFILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,31,55,10
+    GROUPBOX        "Layout and Pretty Printing",IDC_STATIC,7,58,172,116
+    EDITTEXT        IDC_TABWIDTH,14,72,30,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_TABWIDTH,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,33,72,11,14
+    LTEXT           "Tabulator width",IDC_STATIC,48,75,51,8
+    CONTROL         "Use tabulators for indentation ",IDC_USE_TABS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,90,114,10
+    EDITTEXT        IDC_LABEL_WIDTH,14,102,30,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_LABEL,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,33,102,11,14
+    LTEXT           "Maximum label width",IDC_STATIC,47,105,66,8
+    EDITTEXT        IDC_OPCODE_WIDTH,14,121,30,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_OPCODE,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,33,121,11,14
+    LTEXT           "Maximum opcode width",IDC_STATIC,47,124,75,8
+    EDITTEXT        IDC_ARG_WIDTH,14,140,30,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_ARG,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,33,140,11,14
+    LTEXT           "Maximum argument width",IDC_STATIC,46,143,82,8
+    CONTROL         "Use CR LF for line ends",IDC_USE_CRLF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,158,95,10
+END
+
+IDD_SHOW_SPECIAL DIALOGEX 0, 0, 183, 395
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTERMOUSE | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Show Special Registers"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,126,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,126,24,50,14
+    CONTROL         "rA",IDC_SHOW_RA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,7,111,10
+    CONTROL         "rB",IDC_SHOW_RB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,19,111,10
+    CONTROL         "rC",IDC_SHOW_RC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,31,111,10
+    CONTROL         "rD",IDC_SHOW_RD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,43,169,10
+    CONTROL         "rE",IDC_SHOW_RE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,55,169,10
+    CONTROL         "rF",IDC_SHOW_RF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,67,169,10
+    CONTROL         "rG",IDC_SHOW_RG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,79,169,10
+    CONTROL         "rH",IDC_SHOW_RH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,91,169,10
+    CONTROL         "rI",IDC_SHOW_RI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,103,169,10
+    CONTROL         "rJ",IDC_SHOW_RJ,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,115,169,10
+    CONTROL         "rK",IDC_SHOW_RK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,127,169,10
+    CONTROL         "rL",IDC_SHOW_RL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,139,169,10
+    CONTROL         "rM",IDC_SHOW_RM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,151,169,10
+    CONTROL         "rN",IDC_SHOW_RN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,163,169,10
+    CONTROL         "rO",IDC_SHOW_RO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,175,169,10
+    CONTROL         "rP",IDC_SHOW_RP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,187,169,10
+    CONTROL         "rQ",IDC_SHOW_RQ,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,199,169,10
+    CONTROL         "rR",IDC_SHOW_RR,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,211,169,10
+    CONTROL         "rS",IDC_SHOW_RS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,223,169,10
+    CONTROL         "rT",IDC_SHOW_RT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,235,169,10
+    CONTROL         "rU",IDC_SHOW_RU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,247,169,10
+    CONTROL         "rV",IDC_SHOW_RV,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,259,169,10
+    CONTROL         "rW",IDC_SHOW_RW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,271,169,10
+    CONTROL         "rX",IDC_SHOW_RX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,283,169,10
+    CONTROL         "rY",IDC_SHOW_RY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,295,169,10
+    CONTROL         "rZ",IDC_SHOW_RZ,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,307,169,10
+    CONTROL         "rBB",IDC_SHOW_RBB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,319,169,10
+    CONTROL         "rTT",IDC_SHOW_RTT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,331,169,10
+    CONTROL         "rWW",IDC_SHOW_RWW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,343,169,10
+    CONTROL         "rXX",IDC_SHOW_RXX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,355,169,10
+    CONTROL         "rYY",IDC_SHOW_RYY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,367,169,10
+    CONTROL         "rZZ",IDC_SHOW_RZZ,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,378,169,10
+END
+
+IDD_OPTIONS_SYMTAB DIALOGEX 0, 0, 186, 90
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Symbol Table Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    CONTROL         "Show Locals",IDC_CHECK_LOCALS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,7,55,10
+    CONTROL         "Show Registers",IDC_CHECK_REGISTERS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,22,65,10
+    CONTROL         "Show small values",IDC_CHECK_SMALL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,37,73,10
+END
+
+IDD_OPTIONS_RUN DIALOGEX 0, 0, 294, 93
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Run"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,237,55,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,237,72,50,14
+    EDITTEXT        IDC_ARGS,60,7,227,14,ES_AUTOHSCROLL
+    LTEXT           "Command line:",IDC_STATIC,7,10,51,8
+    LTEXT           "Fake StdIn:",IDC_STATIC,19,30,39,8
+    EDITTEXT        IDC_FAKE_STDIN,60,27,170,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse ...",IDC_BROWSE_STDIN,237,27,50,14
+END
+
+IDD_OPTIONS_EXCEPTIONS DIALOGEX 0, 0, 211, 122
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Tracing Exceptions"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,154,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,154,24,50,14
+    CONTROL         "Floating inexact (X_BIT)",IDC_CHECK_EXCEPTIONS_X,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,7,94,10
+    CONTROL         "Floating division by zero (Z_BIT)",IDC_CHECK_EXCEPTIONS_Z,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,21,121,10
+    CONTROL         "Floating underflow (U_BIT)",IDC_CHECK_EXCEPTIONS_U,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,35,104,10
+    CONTROL         "Floating overflow (O_BIT)",IDC_CHECK_EXCEPTIONS_O,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,49,100,10
+    CONTROL         "Floating invalid operation (I_BIT)",IDC_CHECK_EXCEPTIONS_I,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,63,123,10
+    CONTROL         "Float-to-fix overflow (W_BIT)",IDC_CHECK_EXCEPTIONS_W,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,77,111,10
+    CONTROL         "Integer overflow (V_BIT)",IDC_CHECK_EXCEPTIONS_V,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,91,97,10
+    CONTROL         "Integer divide check (D_BIT)",IDC_CHECK_EXCEPTIONS_D,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,105,109,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_BREAKPOINTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        TOPMARGIN, 2
+    END
+
+    IDD_SHOW_DEBUG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 296
+        BOTTOMMARGIN, 213
+    END
+
+    IDD_FIND, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 310
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_OPTIONS_ASSEMBLER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 233
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 108
+    END
+
+    IDD_OPTIONS_EDITOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 174
+    END
+
+    IDD_SHOW_SPECIAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 176
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 388
+    END
+
+    IDD_OPTIONS_SYMTAB, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+    END
+
+    IDD_OPTIONS_RUN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 287
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_OPTIONS_EXCEPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 204
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 115
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MEMPOPUP MENU 
+BEGIN
+    POPUP "MemoryPopUp"
+    BEGIN
+        MENUITEM "Break at Address",            ID_POPUP_BREAKONADDRESS
+        MENUITEM "Break at Value",              ID_POPUP_BREAKONVALUE
+        MENUITEM "Show Memory at Address",      ID_POPUP_SHOW
+    END
+    POPUP "RegisterPopUp"
+    BEGIN
+        MENUITEM "Break at Value",              ID_POPUP_BREAKONVALUE
+        MENUITEM "Show Memory",                 ID_POPUP_SHOW
+    END
+    POPUP "SymbolPopUp"
+    BEGIN
+        MENUITEM "Break at Symbol",             ID_POPUP_BREAKONVALUE
+        MENUITEM "Show Memory",                 ID_POPUP_SHOW
+    END
+    POPUP "BreakpointPopUp"
+    BEGIN
+        MENUITEM "Mark Source Line",            ID_POPUP_MARK_SOURCE
+        MENUITEM "Show Memory",                 ID_POPUP_SHOW
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""vmb_vd.rc""\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.h
+//
+#include "vmb_vd.rc"
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
