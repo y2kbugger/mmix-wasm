@@ -73,7 +73,6 @@ Char *filename[257];
           panic("Capacity exceeded: More than 256 file names");
         filename_count++;
       }
-      else free(filename[filename_count]); 
 @y
       filename[k]='\0';
       k= filename2file(filename);
