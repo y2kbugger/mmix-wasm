@@ -1111,8 +1111,7 @@ case CSWAP: case CSWAPI: w.l&=-8;@+ll=mem_find(w);
 case GET:@+if (yy!=0 || zz>=32) goto illegal_inst;
   x=g[zz];
   goto store_x;
-case PUTI: z.l=yz, yy=0; 
-case PUT: if (yy!=0 || xx>=32) goto illegal_inst;
+case PUT: case PUTI:@+ if (yy!=0 || xx>=32) goto illegal_inst;
   strcpy(rhs,"%z = %#z");
   if (xx>=8) {
     if (xx<=11 && xx!=8) goto illegal_inst; /* can't change rN, rO, rS */
