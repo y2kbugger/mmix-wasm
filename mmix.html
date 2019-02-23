@@ -5,20 +5,27 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>MMIX-WASM</title>
     <style>
-      body {
+      html,body {
         font-family: arial;
         margin: 0;
         padding: none;
+        height: 100%;
       }
       #io-container {
-          width: 100%;
-          height: 800px;
-      }
-      #io-container textarea{
+        width: 100%;
+        height: 90%;
+        min-height: 90%;
+        display: flex;
+        flex-direction: column;
+     }
+
+       #io-container textarea {
           width: 90%;
-          height: 50%;
           margin: auto;
-      }
+          flex-direction: column;
+          display: flex;
+          flex: 1;
+        }
       #input {
           color: blue;
       }
@@ -95,61 +102,59 @@
         };
       };
     </script>
-    <!-- <script type="text/javascript" src="mmix.js"></script> -->
+    <script type="text/javascript" src="mmix.js"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
-        <!-- var inputElement = document.getElementById('input'); -->
-        <!-- var mmix; -->
-        <!-- var mmixal; -->
-        <!-- Module['onRuntimeInitialized'] = function (){ -->
-        <!--     mmix = Module.cwrap('mmix_wasm', 'number', ['number', 'array']); -->
-        <!--     mmixal = Module.cwrap('mmixal_wasm', 'number', []); -->
-        <!--     inputElement.value = ` -->
-<!-- argv   IS    $1 -->
-       <!-- #BYTE "UUUaaa",99,99,99,99,99,99 -->
-       <!-- LOC   #100 -->
-<!-- Main   LDOU  $255,argv,0 -->
-       <!-- TRAP  0,Fputs,StdOut -->
-       <!-- GETA  $255,String -->
-       <!-- TRAP  0,Fputs,StdOut -->
-       <!-- TRAP  0,Halt,0 -->
-<!-- String BYTE  ", world",#a,0 -->
-<!-- `; -->
-        <!--     FS.writeFile("/in.mms", inputElement.value); -->
-        <!--     mmixal(); -->
-        <!--     mmix(1, "mmix_wasm.mmo"); -->
-        <!-- } -->
-        <!-- var oldval = ""; -->
-        <!-- function rerun(){ -->
-        <!--     if (inputElement.value != oldval) { -->
-        <!--         document.getElementById('output').value = ""; -->
-        <!--         FS.writeFile("/in.mms", inputElement.value); -->
-        <!--         mmixal(); -->
-        <!--         mmix(1, "mmix_wasm.mmo"); -->
-        <!--         oldval = inputElement.value; -->
-        <!--     } -->
-        <!-- } -->
-    <!-- $("#input").on('keyup paste', rerun); -->
+        var inputElement = document.getElementById('input');
+        var mmix;
+        var mmixal;
+        Module['onRuntimeInitialized'] = function (){
+            mmix = Module.cwrap('mmix_wasm', 'number', ['number', 'array']);
+            mmixal = Module.cwrap('mmixal_wasm', 'number', []);
+            inputElement.value = `
+argv   IS    $1
+       #BYTE "UUUaaa",99,99,99,99,99,99
+       LOC   #100
+Main   LDOU  $255,argv,0
+       TRAP  0,Fputs,StdOut
+       GETA  $255,String
+       TRAP  0,Fputs,StdOut
+       TRAP  0,Halt,0
+String BYTE  ", world",#a,0
+`;
+        rerun();
+        }
+        var oldval = "";
+        function rerun(){
+            if (inputElement.value != oldval) {
+                document.getElementById('output').value = "";
+                FS.writeFile("/y2k.mms", inputElement.value);
+                mmixal();
+                mmix(1, "doesn't make diff.mmo");
+                oldval = inputElement.value;
+            }
+        }
+        $("#input").on('keyup paste', rerun);
 
-    // Create a Web Worker (separate thread) that we'll pass the WebAssembly module to.
-      var g_WebWorker = new Worker("webworker.js");
-      g_WebWorker.onerror = function (evt) { console.log(`Error from Web Worker: ${evt.message}`); }
-      g_WebWorker.onmessage = function (evt) { alert(`Message from the Web Worker:\n\n ${evt.data}`); }
-      // Request the wasm file from the server and compile it...(Typically we would call
-      // 'WebAssembly.instantiate' which compiles and instantiates the module. In this
-      // case, however, we just want the compiled module which will be passed to the Web
-      // Worker. The Web Worker will be responsible for instantiating the module.)
-      fetch("mmix.wasm").then(response =>
-        response.arrayBuffer()
-      ).then(bytes =>
-        WebAssembly.compile(bytes)
-      ).then(WasmModule =>
-        g_WebWorker.postMessage({ "MessagePurpose": "CompiledModule", "WasmModule": WasmModule })
-      );
-      function OnClickTest() {
-        // Ask the Web Worker to add two values
-        g_WebWorker.postMessage({ "MessagePurpose": "AddValues", "Val1": 1, "Val2": 2 });
-      }
+    <!-- // Create a Web Worker (separate thread) that we'll pass the WebAssembly module to. -->
+    <!--   var g_WebWorker = new Worker("webworker.js"); -->
+    <!--   g_WebWorker.onerror = function (evt) { console.log(`Error from Web Worker: ${evt.message}`); } -->
+    <!--   g_WebWorker.onmessage = function (evt) { alert(`Message from the Web Worker:\n\n ${evt.data}`); } -->
+    <!--   // Request the wasm file from the server and compile it...(Typically we would call -->
+    <!--   // 'WebAssembly.instantiate' which compiles and instantiates the module. In this -->
+    <!--   // case, however, we just want the compiled module which will be passed to the Web -->
+    <!--   // Worker. The Web Worker will be responsible for instantiating the module.) -->
+    <!--   fetch("mmix.wasm").then(response => -->
+    <!--     response.arrayBuffer() -->
+    <!--   ).then(bytes => -->
+    <!--     WebAssembly.compile(bytes) -->
+    <!--   ).then(WasmModule => -->
+    <!--     g_WebWorker.postMessage({ "MessagePurpose": "CompiledModule", "WasmModule": WasmModule }) -->
+    <!--   ); -->
+    <!--   function OnClickTest() { -->
+    <!--     // Ask the Web Worker to add two values -->
+    <!--     g_WebWorker.postMessage({ "MessagePurpose": "AddValues", "Val1": 1, "Val2": 2 }); -->
+    <!--   } -->
     </script>
   </body>
 </html>
