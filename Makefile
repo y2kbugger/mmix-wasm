@@ -5,8 +5,9 @@ MMIXLIB_SOURCES=./mmixlib/lib*.c ./mmixlib/mmix-arith.c ./mmixlib/mmix-io.c
 SOURCES=mmix-wasm.c
 
 EMSDK_ENV=source ./emsdk/emsdk_env.sh
-EMCC=$(EMSDK_ENV) && emcc
+EMCC=emcc
 CFLAGS=-Wno-extra-tokens
+EXPORTED_FUNCTIONS=-s "EXPORTED_FUNCTIONS=['_mmix_lib_initialize', '_mmix_initialize', '_mmix_boot', '_mmix_load_file', '_mmix_interact', '_mmix_fetch_instruction', '_mmix_perform_instruction', '_mmix_trace', '_mmix_dynamic_trap', '_mmix_profile', '_show_stats', '_mmix_finalize']"
 
 all : emsdk mmix.wasm mmix.js mmix.js
 
@@ -14,7 +15,7 @@ $(MMIXLIB_SOURCES) :
 	cd $(MMIXLIB) && make
 
 mmix.wasm mmix.js: $(MMIXLIB_SOURCES) $(SOURCES)
-	$(EMCC) $(SOURCES) $(MMIXLIB_SOURCES) $(CFLAGS) -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'FS_createDataFile', 'FS']" --emrun -o mmix.js
+	$(EMCC) $(SOURCES) $(MMIXLIB_SOURCES) $(CFLAGS) $(EXPORTED_FUNCTIONS) -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'FS_createDataFile', 'FS']" --emrun -o mmix.js
 	echo run a local server like this: 'emrun --no_browser --port 8080 .'
 
 emsdk :
@@ -30,6 +31,10 @@ clean:
 	rm -f $(MMIXWARE)/abstime
 	cd $(MMIXLIB) && make clean
 	cd $(MMIXWARE) && make clean
+
+clean-small:
+	rm -f mmix.wasm
+	rm -f mmix.js
 
 clean-emsdk:
 	rm -rf ./emsdk

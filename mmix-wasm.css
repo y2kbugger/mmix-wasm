@@ -1,0 +1,41 @@
+html,body {
+    font-family: arial;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+textarea {
+    resize: none;
+}
+#io-container {
+    height: 100vh;
+    padding: 10px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas:'status progress' 'input error' 'output output';
+    grid-template-rows: 50px auto auto;
+}
+
+#progress-container {
+    grid-area: progress;
+    align-self: center;
+    text-align: center;
+}
+#status-container {
+    grid-area: status;
+    align-self: center;
+    text-align: center;
+}
+
+#input {
+    color: blue;
+    grid-area: input;
+}
+#output {
+    color: green;
+    grid-area: output;
+}
+#error {
+    color: red;
+    grid-area: error;
+}

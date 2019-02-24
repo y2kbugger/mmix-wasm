@@ -1,6 +1,8 @@
 #include "emscripten.h"
 #include "mmixlib/abstime.h"
 #include <setjmp.h>
+#include <stdio.h>
+#include <string.h>
 #include "mmixlib/libconfig.h"
 #include "mmixlib/libtype.h"
 #include "mmixlib/libglobals.h"
@@ -10,10 +12,61 @@ EMSCRIPTEN_KEEPALIVE
 int mmixal_wasm() {
     return mmixal("y2k.mms", "y2k.mmo", "y2k.mml");
 }
+EMSCRIPTEN_KEEPALIVE
+bool get_halted() {
+    return halted;
+}
+EMSCRIPTEN_KEEPALIVE
+void set_halted(bool v) {
+    halted = v;
+}
 
 EMSCRIPTEN_KEEPALIVE
-int mmix_wasm(int argc, char*argv[])
+int get_breakpoint() {
+    return breakpoint;
+}
+EMSCRIPTEN_KEEPALIVE
+void set_breakpoint(int v) {
+    breakpoint = v;
+}
+
+EMSCRIPTEN_KEEPALIVE
+bool get_interrupt() {
+    return interrupt;
+}
+EMSCRIPTEN_KEEPALIVE
+void set_interrupt(bool v) {
+    interrupt = v;
+}
+
+EMSCRIPTEN_KEEPALIVE
+bool get_resuming() {
+    return resuming;
+}
+EMSCRIPTEN_KEEPALIVE
+void set_resuming(bool v) {
+    resuming = v;
+}
+
+EMSCRIPTEN_KEEPALIVE
+bool get_trace_bit() {
+    // this is actually a preprocessor builtin
+    // defined bitmask (1<<3)
+    // Therefor, no setter
+    return trace_bit;
+}
+
+EMSCRIPTEN_KEEPALIVE
+int print_mystr(char*mystr)
 {
+    printf("%s", mystr);
+    return strlen(mystr);
+}
+
+EMSCRIPTEN_KEEPALIVE
+int mmix_sim(int argc, char*argv[])
+{
+
 /* char**boot_cur_arg; */
 /* int boot_argc; */
 mmix_lib_initialize();
@@ -35,7 +88,6 @@ MMIX_NO_FILE;
 /*:170*/
 #line 2393 "./mmixlib.ch"
 ;
-
 mmix_initialize();
 
 /* boot_cur_arg= cur_arg; */
@@ -78,6 +130,7 @@ goto boot;
 }
 end_simulation:if(profiling)mmix_profile();
 if(interacting||profiling||showing_stats)show_stats(true);
+show_stats(true);
 mmix_finalize();
 return g[255].l;
 }

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>MMIX-WASM</title>
+    <link rel="stylesheet" href="mmix-wasm.css" />
+  </head>
+  <body>
+    <div id="io-container">
+        <span id="progress-container"><progress id="progress">Not Loaded</progress></span>
+        <span id="status-container"><h2 id="status">No Javascript</h3></span>
+        <textarea id="input"></textarea>
+        <textarea id="error"></textarea>
+        <textarea id="output"></textarea>
+    </div>
+    <script type="text/javascript" >
+        var progressElement = document.getElementById('progress');
+        var statusElement = document.getElementById('status');
+
+        var Module = {
+          preRun: [],
+          postRun: [],
+          print: function(text){
+              if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+              console.log(text);
+          },
+          printErr: function(text){
+              if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+              console.error(text);
+          },
+          setStatus: function(text) {
+            if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+            if (text === Module.setStatus.last.text) return;
+            var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+            var now = Date.now();
+            if (m && now - Module.setStatus.last.time < 20) return; // if this is a progress update, skip it if too soon
+            Module.setStatus.last.time = now;
+            Module.setStatus.last.text = text;
+            if (m) {
+              text = m[1];
+              progressElement.value = parseInt(m[2])*100;
+              progressElement.max = parseInt(m[4])*100;
+              progressElement.hidden = false;
+            } else {
+              progressElement.hidden = true;
+            }
+            statusElement.innerHTML = text;
+          },
+          totalDependencies: 0,
+          monitorRunDependencies: function(left) {
+            this.totalDependencies = Math.max(this.totalDependencies, left);
+            Module.setStatus(left ? 'Loading WASM... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+          }
+        };
+        Module.setStatus('Downloading...');
+        window.onerror = function(event) {
+          // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
+          Module.setStatus('Exception thrown, see JavaScript console');
+          Module.setStatus = function(text) {
+            if (text) Module.printErr('[post-exception status] ' + text);
+          };
+        };
+    </script>
+    <script defer type="text/javascript" src="jquery.js"></script>
+    <script async type="text/javascript" src="mmix.js"></script>
+    <script defer type="text/javascript" src="mmix-wasm-page.js"></script>
+  </body>
+</html>
+
+
