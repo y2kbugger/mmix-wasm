@@ -15,7 +15,7 @@ $(MMIXLIB_SOURCES) :
 	cd $(MMIXLIB) && make
 
 mmix.wasm mmix.js: $(MMIXLIB_SOURCES) $(SOURCES)
-	$(EMCC) $(SOURCES) $(MMIXLIB_SOURCES) $(CFLAGS) $(EXPORTED_FUNCTIONS) -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'FS_createDataFile', 'FS']" --emrun -o mmix.js
+	$(EMCC) $(SOURCES) $(MMIXLIB_SOURCES) $(CFLAGS) $(EXPORTED_FUNCTIONS) -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'FS_createDataFile', 'FS']" -o mmix.js
 	echo run a local server like this: 'emrun --no_browser --port 8080 .'
 
 emsdk :

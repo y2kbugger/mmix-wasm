@@ -5,36 +5,103 @@ html,body {
 }
 textarea {
     resize: none;
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: #ccc;
+    margin: 4px;
 }
 #io-container {
     margin: 12px;
+    /* subtract top and botton margin from height */
     height: calc(100vh - 2*12px);
     display: grid;
     grid-gap: 10px;
-    grid-template-areas:'status progress' 'input error' 'output output';
+    grid-template-areas:'toolbar toolbar' 'input error' 'output output';
     grid-template-rows: 50px auto auto;
 }
 
-#progress-container {
-    grid-area: progress;
+#toolbar {
+    grid-area: toolbar;
     align-self: center;
+}
+#toolbar > span {
+    font-size: 70%;
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 10px;
+    padding-left: 11px;
+    padding-right: 11px;
+    margin: 10px;
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: #ccc;
+    line-height: 40px;
+}
+#toolbar > span > input {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 2px;
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: #ccc;
+}
+
+#progress-container {
+    /* align-self: center; */
+    /* text-align: center; */
+}
+#status {
+    /* align-self: center; */
+    /* text-align: center; */
+}
+#instruction-count {
+    /* align-self: center; */
+    /* text-align: center; */
+}
+#g_reg-container {
+    background-color: #fdf7ea;
+}
+#g_reg_num {
+    width: 30px;
     text-align: center;
 }
-#status-container {
-    grid-area: status;
-    align-self: center;
-    text-align: center;
+#g_reg_val {
+    color: bisque;
+    font-family: monospace;
+    font-size: 160%;
+}
+#g_reg_val b {
+    color: chocolate;
+}
+#freq {
+    width: 60px;
 }
 
 #input {
     color: blue;
     grid-area: input;
 }
+#error {
+    color: red;
+    grid-area: error;
+}
 #output {
     color: green;
     grid-area: output;
 }
-#error {
-    color: red;
-    grid-area: error;
+
+@media only screen and (max-width: 600px) {
+    #io-container {
+        margin: 12px;
+        /* subtract top and botton margin from height */
+        height: auto;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-areas: 'error' 'input' 'toolbar' 'output';
+        grid-template-rows: 120px 400px auto 400px;
+    }
+
+#toolbar > span {
+    font-size: 100%;
+    line-height: 50px;
 }

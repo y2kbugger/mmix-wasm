@@ -1,14 +1,22 @@
-initialMixalProgram = `	LOC	#20
+initialMixalProgram = `	LOC	80
 	GREG	@
-argv	BYTE	"Hello,",10
+mask	OCTA	#0102040810204080
+output	BYTE	"UUUUUUUU",10,0,0,0,0,0,0,0
+#input	OCTA	#aabb112233445566
+input	BYTE	"y2kbuggr"
+
 	LOC	#100
 	GREG	@
-Main	LDA	$255,argv
+x	IS	$1
+y	IS	$2
+z	IS	$3
+Main	LDOU	y,input
+	LDOU	z,mask
+	MXOR	x,y,z
+	STOU	x,output
+	LDA	$255,output
 	TRAP	0,Fputs,StdOut
-	GETA	$255,String
-	TRAP	0,Fputs,StdOut
-	TRAP	0,Halt,0
-String	BYTE	"	World",#a,0`;
+	TRAP	0,Halt,0`
 
 function makeWriter(elementid) {
     var element = document.getElementById(elementid);
@@ -32,83 +40,112 @@ var rerunOldVal = "";
 function rerun(){
     if (inputElement.value == rerunOldVal) return;
 
-    document.getElementById('output').value = "";
+    // store the program across refreshes
+    MixalProgram = localStorage.setItem('MixalProgram',inputElement.value);
+
     document.getElementById('error').value = "";
     FS.writeFile("/y2k.mms", inputElement.value);
     mmixal();
     if (document.getElementById('error').value == "")
     {
         // mmix_sim();
+        document.getElementById('output').value = "";
         mmix_sim_js()
     }
     rerunOldVal = inputElement.value;
 }
 
+sim_timer = undefined;
+instruction_count = 0;
 function mmix_sim_js(){
+    if (sim_timer != undefined) {
+        mmix_sim_js_stop()
+    }
+
+    instruction_count = 0;
+    $('#instruction-count').text(instruction_count);
+
     mmix_lib_initialize();
     mmix_initialize();
     mmix_boot();
     y2k_mmix_load_file();
+
+    interval_ms = 1000 / $('#freq').val()
+    sim_timer = setInterval(mmix_sim_loop, interval_ms);
+    // sim_timer = setInterval(mmix_sim_loop, 1000);
 
     // set_breakpoint(0);
     // if(get_interacting())
     // {
     //     mmix_interact();
     // }
-
-    while(true)
-    {
-        console.log('start execution cycle');
-
-        // if(get_interrupt()&&!get_breakpoint())
-        // {
-        //     set_breakpoint(get_breakpoint() | get_trace_bit());
-        //     set_interacting(true);
-        //     set_interrupt(false);
-        // }
-        // else
-        // {
-        //     set_breakpoint(0);
-        //     if(get_interacting())
-        //     {
-        //         mmix_interact();
-        //     }
-        // }
-        if (get_halted())
-        {
-            console.log('halting');
-            break;
-        }
-
-        do
-        {
-            console.log('Inner looper');
-            if(!get_resuming())
-            {
-                mmix_fetch_instruction();
-            }
-            mmix_perform_instruction();
-            // mmix_trace();
-            mmix_dynamic_trap();
-            // if(get_resuming() && op != RESUME)
-            if(get_resuming())
-            {
-                set_resuming(false);
-            }
+}
 
 
-        } while(get_resuming()||(!get_interrupt()&&!get_breakpoint()));
-
-        // if(get_interact_after_break())
-        // {
-        //     set_interacting(true);
-        //     set_interact_after_break(false);
-        // }
-    }
-    show_stats(true);
+function mmix_sim_js_stop(){
+    clearInterval(sim_timer);
+    sim_timer = undefined;
     mmix_finalize();
 }
 
+function mmix_sim_loop() {
+    // if(get_interrupt()&&!get_breakpoint())
+    // {
+    //     set_breakpoint(get_breakpoint() | get_trace_bit());
+    //     set_interacting(true);
+    //     set_interrupt(false);
+    // }
+    // else
+    // {
+    //     set_breakpoint(0);
+    //     if(get_interacting())
+    //     {
+    //         mmix_interact();
+    //     }
+    // }
+    console.log("Outer_looper");
+    if (get_halted())
+    {
+        console.log('halting');
+        show_stats(true);
+        mmix_sim_js_stop();
+        return;
+    }
+
+    // do {
+    // This inner loop is normal running
+    // The out loop (this whole function is the part handling interrupt resumes and breakpoints
+        console.log('Inner_looper');
+        if(!get_resuming())
+        {
+            mmix_fetch_instruction();
+            instruction_count += 1;
+            $('#instruction-count').text(instruction_count);
+        }
+        mmix_perform_instruction();
+        reg_num = $('#g_reg_num').val();
+        $('#g_reg_val').html(g_hex(reg_num));
+        // mmix_trace();
+        mmix_dynamic_trap();
+        // if(get_resuming() && op != RESUME)
+        // fixme we need to add back this op checking
+        if(get_resuming())
+        {
+            set_resuming(false);
+        }
+    // } while ((get_resuming() || (!get_interrupt() && !get_breakpoint())))
+
+    // mmix_sim_js_stop();
+
+    // if(get_interact_after_break())
+    // {
+    //     set_interacting(true);
+    //     set_interact_after_break(false);
+    // }
+
+}
+
+// Module = new Object();
 Module.print = makeWriter('output');
 Module.printErr = makeWriter('error');
 Module.onRuntimeInitialized = function (){
@@ -134,33 +171,39 @@ Module.onRuntimeInitialized = function (){
     mmix_finalize = Module.cwrap('mmix_finalize', 'number', []);
 
 
-get_halted = Module.cwrap('get_halted', 'bool', []);
-set_halted = Module.cwrap('set_halted', null, ['bool']);
+    get_halted = Module.cwrap('get_halted', 'bool', []);
+    set_halted = Module.cwrap('set_halted', null, ['bool']);
 
-get_breakpoint = Module.cwrap('get_breakpoint', 'number', []);
-set_breakpoint = Module.cwrap('set_breakpoint', null, ['number']);
+    get_breakpoint = Module.cwrap('get_breakpoint', 'number', []);
+    set_breakpoint = Module.cwrap('set_breakpoint', null, ['number']);
 
-get_interrupt = Module.cwrap('get_interrupt', 'bool', []);
-set_interrupt = Module.cwrap('set_interrupt', null, ['bool']);
+    get_interrupt = Module.cwrap('get_interrupt', 'bool', []);
+    set_interrupt = Module.cwrap('set_interrupt', null, ['bool']);
 
-get_resuming = Module.cwrap('get_resuming', 'bool', []);
-set_resuming = Module.cwrap('set_resuming', null, ['bool']);
+    get_resuming = Module.cwrap('get_resuming', 'bool', []);
+    set_resuming = Module.cwrap('set_resuming', null, ['bool']);
 
-get_interacting = Module.cwrap('get_interacting', 'bool', []);
-set_interacting = Module.cwrap('set_interacting', null, ['bool']);
+    get_interacting = Module.cwrap('get_interacting', 'bool', []);
+    set_interacting = Module.cwrap('set_interacting', null, ['bool']);
 
-get_interact_after_break = Module.cwrap('get_interact_after_break', 'bool', []);
-set_interact_after_break = Module.cwrap('set_interact_after_break', null, ['bool']);
+    get_interact_after_break = Module.cwrap('get_interact_after_break', 'bool', []);
+    set_interact_after_break = Module.cwrap('set_interact_after_break', null, ['bool']);
 
-get_profiling = Module.cwrap('get_profiling', 'bool', []);
-set_profiling = Module.cwrap('set_profiling', null, ['bool']);
+    get_profiling = Module.cwrap('get_profiling', 'bool', []);
+    set_profiling = Module.cwrap('set_profiling', null, ['bool']);
 
-get_showing_stats = Module.cwrap('get_showing_stat', 'bool', []);
-set_showing_stats = Module.cwrap('set_showing_stat', null, ['bool']);
+    get_showing_stats = Module.cwrap('get_showing_stat', 'bool', []);
+    set_showing_stats = Module.cwrap('set_showing_stat', null, ['bool']);
 
-get_trace_bit = Module.cwrap('get_trace_bit', 'number', []);
+    get_trace_bit = Module.cwrap('get_trace_bit', 'number', []);
+    get_general_register = Module.cwrap('get_general_register', 'number', ['number','bool']);
 
-    inputElement.value = initialMixalProgram;
+    MixalProgram = localStorage.getItem('MixalProgram');
+    if (MixalProgram == null) {
+        // Set up initial program and run once
+        MixalProgram = initialMixalProgram;
+    }
+    inputElement.value = MixalProgram;
     rerun();
 }
 $("#input").on('keyup paste', rerun);
@@ -170,6 +213,42 @@ document.getElementById("input").addEventListener("keydown", function(e) {
         document.execCommand("insertText", false, "\t");
     }
 }, false);
+
+function g_hex(register_num, noformat) {
+    h = get_general_register(register_num, true).toString(16);
+    l = get_general_register(register_num, false).toString(16);
+    hs = '0'.repeat(8 - h.length);
+    ls = '0'.repeat(8 - l.length);
+    if (noformat) return hs + h + ls + l;
+    if (h == '0') {
+        return hs + h + ls + '<b>' + l + '</b>';
+    }
+    else {
+        return hs + '<b>' + h + ls +  l +'</b>';
+    }
+}
+function g_bin(register_num, noformat) {
+    h = get_general_register(register_num, true).toString(2);
+    l = get_general_register(register_num, false).toString(2);
+    hs = '0'.repeat(32 - h.length);
+    ls = '0'.repeat(32 - l.length);
+    if (noformat) return hs + h + ls + l;
+    if (h == '0') {
+        return hs + h + ls + '<b>' + l + '</b>';
+    }
+    else {
+        return hs + '<b>' + h + ls +  l +'</b>';
+    }
+}
+function g_dec(register_num, noformat) {
+    if (h != 0) return "overflow"; // this could be handled at some point
+    // h = get_g_register_h(register_num).toString(2);
+    l = get_g_register_l(register_num).toString(10);
+    if (noformat) return l;
+
+    return '<b>' + l + '</b>';
+}
+
 
 // https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
 

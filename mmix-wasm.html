@@ -5,11 +5,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>MMIX-WASM</title>
     <link rel="stylesheet" href="mmix-wasm.css" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
   </head>
   <body>
     <div id="io-container">
-        <span id="progress-container"><progress id="progress">Not Loaded</progress></span>
-        <span id="status-container"><h2 id="status">No Javascript</h3></span>
+        <div id="toolbar">
+            <span id="status">No Javascript</span>
+            <span id="instruction-count-container">Instruction <span id="instruction-count">0</span></span>
+            <span id="freq-container">Freq<input id="freq" type="text" value="2"></input>Hz</span>
+            <progress id="progress">Not Loaded</progress>
+            <span id="g_reg-container">Register<input id="g_reg_num" type="text" value="255"></input><span id="g_reg_val"></span></span>
+        </div>
         <textarea id="input"></textarea>
         <textarea id="error"></textarea>
         <textarea id="output"></textarea>
@@ -45,7 +51,13 @@
             } else {
               progressElement.hidden = true;
             }
-            statusElement.innerHTML = text;
+            if (text == '') {
+              statusElement.style.display = "none";
+              statusElement.innerHTML = text;
+            } else {
+              statusElement.style.display = "";
+              statusElement.innerHTML = text;
+            }
           },
           totalDependencies: 0,
           monitorRunDependencies: function(left) {
@@ -63,8 +75,8 @@
         };
     </script>
     <script defer type="text/javascript" src="jquery.js"></script>
-    <script async type="text/javascript" src="mmix.js"></script>
     <script defer type="text/javascript" src="mmix-wasm-page.js"></script>
+    <script defer type="text/javascript" src="mmix.js"></script>
   </body>
 </html>
 

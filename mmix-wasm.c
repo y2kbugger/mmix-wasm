@@ -58,6 +58,19 @@ void y2k_mmix_load_file(){
 }
 
 EMSCRIPTEN_KEEPALIVE
+int get_general_register(int reg_number, bool high) {
+    octa z;
+    if(reg_number>=G) z=g[reg_number];
+    else if(reg_number<L) z=l[(O+reg_number)&lring_mask];
+    if (high)
+    {
+        return z.h;
+    }else {
+        return z.l;
+    }
+}
+
+EMSCRIPTEN_KEEPALIVE
 int mmix_sim()
 {
     mmix_lib_initialize();
