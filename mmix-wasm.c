@@ -137,4 +137,3 @@ boot:
     mmix_finalize();
     return g[255].l;
 }
-#line 2918 "./mmixware/mmix-sim.w"
