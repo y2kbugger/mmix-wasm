@@ -1,12 +1,14 @@
-#include "emscripten.h"
-#include "mmixlib/abstime.h"
 #include <setjmp.h>
 #include <stdio.h>
 #include <string.h>
-#include "mmixlib/libconfig.h"
-#include "mmixlib/libtype.h"
-#include "mmixlib/libglobals.h"
-#include "mmixlib/mmixlib.h"
+
+#include "emscripten.h"
+
+#include "abstime.h"
+#include "libconfig.h"
+#include "libtype.h"
+#include "libglobals.h"
+#include "mmixlib.h"
 
 EMSCRIPTEN_KEEPALIVE
 int mmixal_wasm() {
