@@ -215,8 +215,8 @@ document.getElementById("input").addEventListener("keydown", function(e) {
 }, false);
 
 function g_hex(register_num, noformat) {
-    h = get_general_register(register_num, true).toString(16);
-    l = get_general_register(register_num, false).toString(16);
+    h = (get_general_register(register_num, true) >>>0).toString(16);
+    l = (get_general_register(register_num, false) >>>0).toString(16);
     hs = '0'.repeat(8 - h.length);
     ls = '0'.repeat(8 - l.length);
     if (noformat) return hs + h + ls + l;
@@ -228,8 +228,8 @@ function g_hex(register_num, noformat) {
     }
 }
 function g_bin(register_num, noformat) {
-    h = get_general_register(register_num, true).toString(2);
-    l = get_general_register(register_num, false).toString(2);
+    h = (get_general_register(register_num, true) >>>0).toString(2);
+    l = (get_general_register(register_num, false) >>>0).toString(2);
     hs = '0'.repeat(32 - h.length);
     ls = '0'.repeat(32 - l.length);
     if (noformat) return hs + h + ls + l;
