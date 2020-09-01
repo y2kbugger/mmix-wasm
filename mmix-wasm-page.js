@@ -41,7 +41,11 @@ function rerun(){
     if (inputElement.value == rerunOldVal) return;
 
     // store the program across refreshes
-    MixalProgram = localStorage.setItem('MixalProgram',inputElement.value);
+    try {
+        MixalProgram = localStorage.setItem('MixalProgram',inputElement.value);
+    } catch {
+        MixalProgram = inputElement.value;
+    }
 
     document.getElementById('error').value = "";
     FS.writeFile("/y2k.mms", inputElement.value);
@@ -198,7 +202,12 @@ Module.onRuntimeInitialized = function (){
     get_trace_bit = Module.cwrap('get_trace_bit', 'number', []);
     get_general_register = Module.cwrap('get_general_register', 'number', ['number','bool']);
 
-    MixalProgram = localStorage.getItem('MixalProgram');
+    try {
+        MixalProgram = localStorage.getItem('MixalProgram');
+    } catch {
+        MixalProgram = null;
+    }
+
     if (MixalProgram == null) {
         // Set up initial program and run once
         MixalProgram = initialMixalProgram;

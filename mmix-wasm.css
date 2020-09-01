@@ -9,6 +9,10 @@ textarea {
     border-radius: 8px;
     border-color: #ccc;
     margin: 4px;
+    width: 100%;
+    height: calc(100% - 48px);
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
 }
 #io-container {
     margin: 12px;
@@ -16,8 +20,8 @@ textarea {
     height: calc(100vh - 2*12px);
     display: grid;
     grid-gap: 10px;
-    grid-template-areas:'toolbar toolbar' 'input error' 'output output';
-    grid-template-rows: 50px auto auto;
+    grid-template-areas: 'toolbar toolbar' 'input error' 'output output';
+    grid-template-rows: fit-content(100px) auto auto;
 }
 
 #toolbar {
@@ -79,26 +83,33 @@ textarea {
 
 #input {
     color: blue;
-    grid-area: input;
 }
 #error {
     color: red;
-    grid-area: error;
 }
 #output {
     color: green;
+}
+
+#input_c {
+    grid-area: input;
+}
+#error_c {
+    grid-area: error;
+}
+#output_c {
     grid-area: output;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     #io-container {
         margin: 12px;
         /* subtract top and botton margin from height */
         height: auto;
         display: grid;
         grid-gap: 10px;
-        grid-template-areas: 'error' 'input' 'toolbar' 'output';
-        grid-template-rows: 120px 400px auto 400px;
+        grid-template-areas: 'input' 'toolbar' 'output' 'error';
+        grid-template-rows: 400px auto 400px 120px;
     }
 
 #toolbar > span {
